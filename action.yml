@@ -25,6 +25,7 @@ runs:
         ruby-version: 3.1
 
     - name: Parse pull request title
+      shell: bash
       run: |
         echo "COMPARE_GEM=$(echo ${{ inputs.pr_title }} | ./parse_title name)" >> $GITHUB_ENV
         echo "COMPARE_FROM_VERSION=$(echo ${{ inputs.pr_title }} | ./parse_title from)" >> $GITHUB_ENV
