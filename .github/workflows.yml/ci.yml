@@ -1,0 +1,12 @@
+name: CI
+on:
+  workflow_dispatch:
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+      - run: gem install gem-compare 1.1.0
+      - run: gem compare pg 1.4.0 1.4.1
+      - run: gem compare --diff pg 1.4.0 1.4.1
