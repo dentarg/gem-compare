@@ -33,28 +33,28 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1
-      - name: Run gem install gem-compare --version $GEM_COMPARE_VERSION
+      - name: "Run gem install gem-compare --version $GEM_COMPARE_VERSION"
         run: |
           gem install gem-compare --version $GEM_COMPARE_VERSION
-      - name: Run gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION
+      - name: "Run gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION"
         run: |
           echo 'COMPARE_OUTPUT<<EOF' >> $GITHUB_ENV
           gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
-      - name: Run gem compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION
+      - name: "Run gem compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION"
         run: |
           echo 'COMPARE_DIFF_OUTPUT<<EOF' >> $GITHUB_ENV
           gem compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       - name: Run gh pr comment
         run: |
-          echo '## `gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION`' > comment.txt
+          echo "## <code>gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code>" > comment.txt
           echo ''                        >> comment.txt
-          echo '````'                    >> comment.txt
+          echo '````ruby'                >> comment.txt
           echo "$COMPARE_OUTPUT"         >> comment.txt
           echo '````'                    >> comment.txt
 
-          echo '## `gem compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION`' >> comment.txt
+          echo "## <code>gem compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code>" >> comment.txt
           echo ''                        >> comment.txt
           echo '````diff'                >> comment.txt
           echo "$COMPARE_DIFF_OUTPUT"    >> comment.txt
