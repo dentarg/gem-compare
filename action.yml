@@ -41,9 +41,7 @@ runs:
         COMPARE_FROM_VERSION: ${{ inputs.from }}
         COMPARE_TO_VERSION: ${{ inputs.to }}
       run: |
-        echo 'COMPARE_OUTPUT<<EOF' >> $GITHUB_ENV
-        gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION >> $GITHUB_ENV
-        echo 'EOF' >> $GITHUB_ENV
+        gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_output.txt
 
     - name: Run gem compare --diff
       shell: bash
@@ -52,9 +50,7 @@ runs:
         COMPARE_FROM_VERSION: ${{ inputs.from }}
         COMPARE_TO_VERSION: ${{ inputs.to }}
       run: |
-        echo 'COMPARE_DIFF_OUTPUT<<EOF' >> $GITHUB_ENV
-        gem compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION >> $GITHUB_ENV
-        echo 'EOF' >> $GITHUB_ENV
+        gem compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_diff.txt
 
     - name: Run gh pr comment
       shell: bash
@@ -67,14 +63,14 @@ runs:
         echo "## <code>gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code>" > comment.txt
         echo ''                        >> comment.txt
         echo '````ruby'                >> comment.txt
-        echo "$COMPARE_OUTPUT"         >> comment.txt
+        cat compare_output.txt         >> comment.txt
         echo '````'                    >> comment.txt
         echo ''                        >> comment.txt
         echo "<Details><Summary><h2><code>gem compare --diff"\
              "$COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code></h2></Summary>" >> comment.txt
         echo ''                        >> comment.txt
         echo '````ruby'                >> comment.txt
-        echo "$COMPARE_DIFF_OUTPUT"    >> comment.txt
+        cat compare_diff.txt           >> comment.txt
         echo '````'                    >> comment.txt
         echo '</Details>'              >> comment.txt
 
