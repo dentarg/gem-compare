@@ -42,9 +42,9 @@ runs:
     - name: Parse pull request title
       shell: bash
       run: |
-        echo "COMPARE_GEM=$(echo $PR_TITLE | ./parse_title name)" >> $GITHUB_ENV
-        echo "COMPARE_FROM_VERSION=$(echo $PR_TITLE | ./parse_title from)" >> $GITHUB_ENV
-        echo "COMPARE_TO_VERSION=$(echo $PR_TITLE | ./parse_title to)" >> $GITHUB_ENV
+        echo "COMPARE_GEM=$(echo $PR_TITLE | parse_title name)" >> $GITHUB_ENV
+        echo "COMPARE_FROM_VERSION=$(echo $PR_TITLE | parse_title from)" >> $GITHUB_ENV
+        echo "COMPARE_TO_VERSION=$(echo $PR_TITLE | parse_title to)" >> $GITHUB_ENV
 
     - name: Run gem install gem-compare
       shell: bash
