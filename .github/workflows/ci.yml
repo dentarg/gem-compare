@@ -30,9 +30,6 @@ jobs:
       COMPARE_TO_VERSION: ${{ inputs.to || '1.4.1' }}
     steps:
       - uses: actions/checkout@v3
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.1
       - name: Run gem install gem-compare
         run: |
           gem install gem-compare --version $GEM_COMPARE_VERSION
