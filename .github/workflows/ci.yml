@@ -54,7 +54,7 @@ jobs:
           echo "$COMPARE_OUTPUT"         >> comment.txt
           echo '````'                    >> comment.txt
           echo ''                        >> comment.txt
-          echo "## <Details><Summary><h2><code>gem compare --diff"\
+          echo "<Details><Summary><h2><code>gem compare --diff"\
                "$COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code></h2></Summary>" >> comment.txt
           echo ''                        >> comment.txt
           echo '````ruby'                >> comment.txt
