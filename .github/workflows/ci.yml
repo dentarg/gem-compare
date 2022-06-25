@@ -14,12 +14,12 @@ jobs:
       - name: Run gem compare
         run: |
           echo 'COMPARE_OUTPUT<<EOF' >> $GITHUB_ENV
-          gem compare pg 1.4.0 1.4.1
+          gem compare pg 1.4.0 1.4.1 >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       - name: Run gem compare --diff
         run: |
           echo 'COMPARE_DIFF_OUTPUT<<EOF' >> $GITHUB_ENV
-          gem compare --diff pg 1.4.0 1.4.1
+          gem compare --diff pg 1.4.0 1.4.1 >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       - name: Run gh pr comment
         run: |
