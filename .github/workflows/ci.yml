@@ -29,6 +29,7 @@ jobs:
       COMPARE_FROM_VERSION: ${{ inputs.from || '1.4.0' }}
       COMPARE_TO_VERSION: ${{ inputs.to || '1.4.1' }}
     steps:
+      - uses: actions/checkout@v3
       - uses: ./
         with:
           gem_compare_version: $GEM_COMPARE_VERSION
