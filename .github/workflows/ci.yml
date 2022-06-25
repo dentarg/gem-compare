@@ -6,42 +6,43 @@ on:
       gem_compare_version:
         description: 'Version of the gem-compare plugin'
         required: false
-        default: '1.1.0'
         type: string
       name:
         description: 'Name of gem to compare'
         required: false
-        default: 'pg'
         type: string
       from:
         description: 'From version'
         required: false
-        default: '1.4.0'
         type: string
       to:
         description: 'To version'
         required: false
-        default: '1.4.1'
         type: string
 
 jobs:
   ci:
     runs-on: ubuntu-latest
+    env:
+      GEM_COMPARE_VERSION: ${{ inputs.gem_compare_version || '1.1.0' }}
+      COMPARE_GEM: ${{ inputs.name || 'pg' }}
+      COMPARE_FROM_VERSION: ${{ inputs.from || '1.4.0' }}
+      COMPARE_TO_VERSION: ${{ inputs.to || '1.4.1' }}
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1
-      - run: gem install gem-compare --version ${{ inputs.gem_compare_version }}
+      - run: gem install gem-compare --version $GEM_COMPARE_VERSION
       - name: Run gem compare
         run: |
           echo 'COMPARE_OUTPUT<<EOF' >> $GITHUB_ENV
-          gem compare ${{ inputs.name }} ${{ inputs.from }} ${{ inputs.to }} >> $GITHUB_ENV
+          gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       - name: Run gem compare --diff
         run: |
           echo 'COMPARE_DIFF_OUTPUT<<EOF' >> $GITHUB_ENV
-          gem compare --diff ${{ inputs.name }} ${{ inputs.from }} ${{ inputs.to }} >> $GITHUB_ENV
+          gem compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       - name: Run gh pr comment
         run: |
