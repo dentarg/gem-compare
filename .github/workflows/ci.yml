@@ -53,12 +53,14 @@ jobs:
           echo '````ruby'                >> comment.txt
           echo "$COMPARE_OUTPUT"         >> comment.txt
           echo '````'                    >> comment.txt
-
-          echo "## <code>gem compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code>" >> comment.txt
+          echo ''                        >> comment.txt
+          echo "## <Details><Summary><h2><code>gem compare --diff"\
+               "$COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code></h2></Summary>" >> comment.txt
           echo ''                        >> comment.txt
           echo '````ruby'                >> comment.txt
           echo "$COMPARE_DIFF_OUTPUT"    >> comment.txt
           echo '````'                    >> comment.txt
+          echo '</Details>'              >> comment.txt
 
           gh pr comment 1 --body-file comment.txt
         env:
