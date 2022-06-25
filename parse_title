@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+title = STDIN.gets.chomp
+part  = ARGV.first.to_sym
+regex = /Bump (?<name>.+) from (?<from>.+) to (?<to>.+)/
+
+puts title.match(regex)[part]
