@@ -2,6 +2,28 @@ name: CI
 on:
   push:
   workflow_dispatch:
+    inputs:
+      gem_compare_version:
+        description: 'Version of the gem-compare plugin'
+        required: false
+        default: '1.1.0'
+        type: string
+      name:
+        description: 'Name of gem to compare'
+        required: false
+        default: 'pg'
+        type: string
+      from:
+        description: 'From version'
+        required: false
+        default: '1.4.0'
+        type: string
+      to:
+        description: 'To version'
+        required: false
+        default: '1.4.1'
+        type: string
+
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -10,16 +32,16 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1
-      - run: gem install gem-compare --version 1.1.0
+      - run: gem install gem-compare --version ${{ inputs.gem_compare_version }}
       - name: Run gem compare
         run: |
           echo 'COMPARE_OUTPUT<<EOF' >> $GITHUB_ENV
-          gem compare pg 1.4.0 1.4.1 >> $GITHUB_ENV
+          gem compare ${{ inputs.name }} ${{ inputs.from }} ${{ inputs.to }} >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       - name: Run gem compare --diff
         run: |
           echo 'COMPARE_DIFF_OUTPUT<<EOF' >> $GITHUB_ENV
-          gem compare --diff pg 1.4.0 1.4.1 >> $GITHUB_ENV
+          gem compare --diff ${{ inputs.name }} ${{ inputs.from }} ${{ inputs.to }} >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       - name: Run gh pr comment
         run: |
