@@ -33,15 +33,15 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.1
-      - name: "Run gem install gem-compare --version $GEM_COMPARE_VERSION"
+      - name: Run gem install gem-compare
         run: |
           gem install gem-compare --version $GEM_COMPARE_VERSION
-      - name: "Run gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION"
+      - name: Run gem compare
         run: |
           echo 'COMPARE_OUTPUT<<EOF' >> $GITHUB_ENV
           gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
-      - name: "Run gem compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION"
+      - name: Run gem compare --diff
         run: |
           echo 'COMPARE_DIFF_OUTPUT<<EOF' >> $GITHUB_ENV
           gem compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION >> $GITHUB_ENV
