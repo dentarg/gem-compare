@@ -7,14 +7,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: |
-          gh pr comment 1 --body "Hi from GitHub CLI"
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+      - run: gem install gem-compare --version 1.1.0
+      - name: Run gem compare
+        run: |
+          echo 'COMPARE_OUTPUT<<EOF' >> $GITHUB_ENV
+          gem compare pg 1.4.0 1.4.1
+          echo 'EOF' >> $GITHUB_ENV
+      - name: Run gem compare --diff
+        run: |
+          echo 'COMPARE_DIFF_OUTPUT<<EOF' >> $GITHUB_ENV
+          gem compare --diff pg 1.4.0 1.4.1
+          echo 'EOF' >> $GITHUB_ENV
+      - name: Run gh pr comment
+        run: |
+          echo '## `gem compare`'         > comment.txt
+          echo ''                        >> comment.txt
+          echo '````'                    >> comment.txt
+          echo $COMPARE_OUTPUT           >> comment.txt
+          echo '````'                    >> comment.txt
+
+          echo '## `gem compare --diff`' >> comment.txt
+          echo ''                        >> comment.txt
+          echo '````diff'                >> comment.txt
+          echo $COMPARE_DIFF_OUTPUT      >> comment.txt
+          echo '````'                    >> comment.txt
+
+          gh pr comment 1 --body-file comment.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # - uses: ruby/setup-ruby@v1
-      #   with:
-      #     ruby-version: 3.1
-      # - run: gem install gem-compare --version 1.1.0
-      # - run: gem compare pg 1.4.0 1.4.1
-      # - run: gem compare --diff pg 1.4.0 1.4.1
