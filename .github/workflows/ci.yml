@@ -6,10 +6,12 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.1
-      - run: gem install gem-compare --version 1.1.0
-      - run: gem compare pg 1.4.0 1.4.1
-      - run: gem compare --diff pg 1.4.0 1.4.1
+      - run: |
+          gh pr comment 1 --body "Hi from GitHub CLI"
+      # - uses: actions/checkout@v3
+      # - uses: ruby/setup-ruby@v1
+      #   with:
+      #     ruby-version: 3.1
+      # - run: gem install gem-compare --version 1.1.0
+      # - run: gem compare pg 1.4.0 1.4.1
+      # - run: gem compare --diff pg 1.4.0 1.4.1
