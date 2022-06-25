@@ -26,13 +26,13 @@ jobs:
           echo '## `gem compare`'         > comment.txt
           echo ''                        >> comment.txt
           echo '````'                    >> comment.txt
-          echo $COMPARE_OUTPUT           >> comment.txt
+          echo "$COMPARE_OUTPUT"         >> comment.txt
           echo '````'                    >> comment.txt
 
           echo '## `gem compare --diff`' >> comment.txt
           echo ''                        >> comment.txt
           echo '````diff'                >> comment.txt
-          echo $COMPARE_DIFF_OUTPUT      >> comment.txt
+          echo "$COMPARE_DIFF_OUTPUT"    >> comment.txt
           echo '````'                    >> comment.txt
 
           gh pr comment 1 --body-file comment.txt
