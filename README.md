@@ -8,10 +8,14 @@ To use in your repo, add a workflow like this:
 name: Gem Compare
 
 on:
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - reopened
+
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
   compare:
