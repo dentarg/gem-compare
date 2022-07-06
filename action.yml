@@ -54,7 +54,14 @@ runs:
         cd vendor/cache
         gem install ./*.gem
         cd gem-compare-*
+        cat gem-compare.gemspec
+        ls -altr
         gem build gem-compare.gemspec
+        ls -altr
+        ruby -e "pp File.file?('test/gemfiles/lorem-0.0.1.gem')"
+        ruby -e "pp File.file?('test/gemfiles/lorem-0.0.2.gem')"
+        ruby -e "pp File.file?('test/gemfiles/lorem-0.0.3.gem')"
+        ruby -e "pp File.file?('test/gemfiles/lorem-0.0.4.gem')"
         gem install ./gem-compare-*.gem
 
     - name: Run gem compare
