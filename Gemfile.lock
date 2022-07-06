@@ -1,0 +1,26 @@
+GIT
+  remote: https://github.com/fedora-ruby/gem-compare.git
+  revision: b9ed2b86b7a93bab3535c6483199249e9a8f43a7
+  specs:
+    gem-compare (1.1.0)
+      diffy
+      gemnasium-parser
+      json
+      rainbow
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    diffy (3.4.2)
+    gemnasium-parser (0.1.9)
+    json (2.6.2)
+    rainbow (3.1.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  gem-compare!
+
+BUNDLED WITH
+   2.3.17
