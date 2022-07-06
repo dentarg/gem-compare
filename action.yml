@@ -49,6 +49,7 @@ runs:
     - name: Install vendored copy of gem-compare
       shell: bash
       run: |
+        set -x
         bundle install --local
         cd vendor/cache
         gem install ./*.gem
