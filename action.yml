@@ -64,18 +64,18 @@ runs:
         ruby -e "pp File.file?('test/gemfiles/lorem-0.0.2.gem')"
         ruby -e "pp File.file?('test/gemfiles/lorem-0.0.3.gem')"
         ruby -e "pp File.file?('test/gemfiles/lorem-0.0.4.gem')"
-        gem build gem-compare.gemspec
-        gem install ./gem-compare-*.gem
+        gem --backtrace build gem-compare.gemspec
+        gem --backtrace install ./gem-compare-*.gem
 
     - name: Run gem compare
       shell: bash
       run: |
-        gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_output.txt
+        gem --backtrace compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_output.txt
 
     - name: Run gem compare --diff
       shell: bash
       run: |
-        gem compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_diff.txt
+        gem --backtrace compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_diff.txt
 
     - name: Run gh pr comment
       shell: bash
