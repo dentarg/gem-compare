@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -x
+
+bundle install --local --verbose
+
+cd vendor/cache
+gem install --config-file gemrc ./*.gem
+
+cd gem-compare-*
+gem build --config-file gemrc gem-compare.gemspec
+gem install --config-file gemrc ./gem-compare-*.gem
