@@ -70,12 +70,12 @@ runs:
     - name: Run gem compare
       shell: bash
       run: |
-        gem --backtrace compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_output.txt
+        gem --backtrace compare --verbose loud $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_output.txt
 
     - name: Run gem compare --diff
       shell: bash
       run: |
-        gem --backtrace compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_diff.txt
+        gem --backtrace compare --verbose loud --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_diff.txt
 
     - name: Run gh pr comment
       shell: bash
