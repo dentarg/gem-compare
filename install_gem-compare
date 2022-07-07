@@ -1,5 +1,8 @@
 #!/bin/bash
 
+GEM_CONFIG_FILE=${GEM_CONFIG_FILE:-"gemrc"}
+
+set -u
 set -x
 
 bundle install --local --verbose
