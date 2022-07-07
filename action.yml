@@ -55,12 +55,12 @@ runs:
     - name: Run gem compare
       shell: bash
       run: |
-        gem compare --config-file ${{ inputs.gemrc }} $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_output.txt
+        gem compare --config-file ./${{ inputs.gemrc }} $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_output.txt
 
     - name: Run gem compare --diff
       shell: bash
       run: |
-        gem compare --config-file ${{ inputs.gemrc }} --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_diff.txt
+        gem compare --config-file ./${{ inputs.gemrc }} --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_diff.txt
 
     - name: Run gh pr comment
       shell: bash
