@@ -69,6 +69,7 @@ runs:
              "$COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code>" > comment.txt
         echo ''                        >> comment.txt
         echo '<Details><Summary>Output</Summary>' >> comment.txt
+        echo ''                        >> comment.txt
         echo '````ruby'                >> comment.txt
         cat compare_output.txt         >> comment.txt
         echo '````'                    >> comment.txt
@@ -78,6 +79,7 @@ runs:
              "$COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code>" >> comment.txt
         echo ''                        >> comment.txt
         echo '<Details><Summary>Output</Summary>' >> comment.txt
+        echo ''                        >> comment.txt
         echo '````ruby'                >> comment.txt
         cat compare_diff.txt           >> comment.txt
         echo '````'                    >> comment.txt
