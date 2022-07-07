@@ -65,15 +65,19 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       run: |
-        echo "## <code>gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code>" > comment.txt
+        echo "## <code>gem compare "\
+             "$COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code>" > comment.txt
         echo ''                        >> comment.txt
+        echo '<Details><Summary>Output</Summary>' >> comment.txt
         echo '````ruby'                >> comment.txt
         cat compare_output.txt         >> comment.txt
         echo '````'                    >> comment.txt
+        echo '</Details>'              >> comment.txt
         echo ''                        >> comment.txt
-        echo "<Details><Summary><h2><code>gem compare --diff"\
-             "$COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code></h2></Summary>" >> comment.txt
+        echo "## <code>gem compare --diff"\
+             "$COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code>" >> comment.txt
         echo ''                        >> comment.txt
+        echo '<Details><Summary>Output</Summary>' >> comment.txt
         echo '````ruby'                >> comment.txt
         cat compare_diff.txt           >> comment.txt
         echo '````'                    >> comment.txt
