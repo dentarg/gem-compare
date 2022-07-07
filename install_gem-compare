@@ -5,8 +5,8 @@ set -x
 bundle install --local --verbose
 
 cd vendor/cache
-gem install --config-file gemrc ./*.gem
+gem install --config-file $GEM_CONFIG_FILE ./*.gem
 
 cd gem-compare-*
-gem build --config-file gemrc gem-compare.gemspec
-gem install --config-file gemrc ./gem-compare-*.gem
+gem build --config-file $GEM_CONFIG_FILE gem-compare.gemspec
+gem install --config-file $GEM_CONFIG_FILE ./gem-compare-*.gem

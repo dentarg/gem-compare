@@ -1,2 +1,3 @@
 :backtrace: true
+:verbose: :really
 install: --no-document
