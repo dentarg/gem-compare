@@ -51,7 +51,7 @@ runs:
       run: install_gem-compare
       env:
         GEM_CONFIG_FILE: ${{ inputs.gemrc }}
-        GEMFILE: "${{ github.action_path }}/Gemfile"
+        BUNDLE_GEMFILE: "${{ github.action_path }}/Gemfile"
 
     - name: Run gem compare
       shell: bash
