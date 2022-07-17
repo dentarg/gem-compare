@@ -48,7 +48,7 @@ runs:
 
     - name: Install vendored copy of gem-compare
       shell: bash
-      run: ./install_gem-compare
+      run: install_gem-compare
       env:
         GEM_CONFIG_FILE: ${{ inputs.gemrc }}
 
