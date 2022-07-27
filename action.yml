@@ -79,4 +79,4 @@ runs:
         echo '````'                    >> comment.txt
         echo '</Details>'              >> comment.txt
 
-        gh pr comment $PR_NUMBER --body-file comment.txt
+        gh pr comment $PR_NUMBER --body-file comment.txt --repo ${{ github.repository }}
