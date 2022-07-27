@@ -65,18 +65,20 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       run: |
-        echo "## <code>gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code>" > comment.txt
-        echo ''                        >> comment.txt
-        echo '````ruby'                >> comment.txt
-        cat compare_output.txt         >> comment.txt
-        echo '````'                    >> comment.txt
-        echo ''                        >> comment.txt
-        echo "<Details><Summary><h2><code>gem compare --diff"\
-             "$COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code></h2></Summary>" >> comment.txt
-        echo ''                        >> comment.txt
-        echo '````ruby'                >> comment.txt
-        cat compare_diff.txt           >> comment.txt
-        echo '````'                    >> comment.txt
-        echo '</Details>'              >> comment.txt
+        echo "## <code>gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code>" > comment1.txt
+        echo ''                        >> comment1.txt
+        echo '````ruby'                >> comment1.txt
+        cat compare_output.txt         >> comment1.txt
+        echo '````'                    >> comment1.txt
+        echo ''                        >> comment1.txt
 
-        gh pr comment $PR_NUMBER --body-file comment.txt --repo ${{ github.repository }}
+        echo "<Details><Summary><h2><code>gem compare --diff"\
+             "$COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION</code></h2></Summary>" >> comment2.txt
+        echo ''                        >> comment2.txt
+        echo '````ruby'                >> comment2.txt
+        cat compare_diff.txt           >> comment2.txt
+        echo '````'                    >> comment2.txt
+        echo '</Details>'              >> comment2.txt
+
+        gh pr comment $PR_NUMBER --body-file comment1.txt --repo ${{ github.repository }}
+        gh pr comment $PR_NUMBER --body-file comment2.txt --repo ${{ github.repository }}
