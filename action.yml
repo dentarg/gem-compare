@@ -6,7 +6,7 @@ branding:
 inputs:
   gem_compare_version:
     description: "Version of the gem-compare plugin"
-    default: "1.2.0"
+    default: "1.2.1"
     required: false
   pr_title:
     description: "String with gem name and from/to versions"
