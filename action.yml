@@ -81,4 +81,4 @@ runs:
         echo '</Details>'              >> comment2.txt
 
         gh pr comment $PR_NUMBER --body-file comment1.txt --repo ${{ github.repository }}
-        gh pr comment $PR_NUMBER --body-file comment2.txt --repo ${{ github.repository }}
+        gh pr comment $PR_NUMBER --body-file comment2.txt --repo ${{ github.repository }} || true
