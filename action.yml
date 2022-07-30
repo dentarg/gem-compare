@@ -33,7 +33,7 @@ runs:
         echo "PR_NUMBER=${{ github.event.pull_request.number || inputs.pr_number }}" >> $GITHUB_ENV
         echo "PR_TITLE=${{ github.event.pull_request.title || inputs.pr_title }}" >> $GITHUB_ENV
 
-    # So the "parse_title" script can be found?
+    # Ensure our scripts can be found when running the action
     # https://docs.github.com/en/actions/creating-actions/creating-a-composite-action#creating-an-action-metadata-file
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
@@ -48,17 +48,17 @@ runs:
     - name: Run gem install gem-compare
       shell: bash
       run: |
-        gem install gem-compare --version ${{ inputs.gem_compare_version }}
+        with_retries gem install gem-compare --version ${{ inputs.gem_compare_version }}
 
     - name: Run gem compare
       shell: bash
       run: |
-        gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_output.txt
+        with_retries gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_output.txt
 
     - name: Run gem compare --diff
       shell: bash
       run: |
-        gem compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_diff.txt
+        with_retries gem compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_diff.txt
 
     - name: Run gh pr comment
       shell: bash
@@ -80,5 +80,5 @@ runs:
         echo '````'                    >> comment2.txt
         echo '</Details>'              >> comment2.txt
 
-        gh pr comment $PR_NUMBER --body-file comment1.txt --repo ${{ github.repository }}
+        with_retries gh pr comment $PR_NUMBER --body-file comment1.txt --repo ${{ github.repository }}
         gh pr comment $PR_NUMBER --body-file comment2.txt --repo ${{ github.repository }} || true
