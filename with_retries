@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Modified version of travis_retry
+# https://github.com/travis-ci/travis-build/blob/04a1963de816b8618bb3d7e2e22d873f05ab4091/lib/travis/build/bash/travis_retry.bash
+
+SLEEP_SECONDS=5
+RETRY_COUNT=5
+
+retry_command() {
+  local result=0
+  local count=1
+  while [[ "${count}" -le $RETRY_COUNT ]]; do
+    [[ "${result}" -ne 0 ]] && {
+      echo -e "\\n${ANSI_RED}The command \"${*}\" failed. Retrying, ${count} of ${RETRY_COUNT}.${ANSI_RESET}\\n" >&2
+    }
+    # run the command in a way that doesn't disable setting `errexit`
+    "${@}"
+    result="${?}"
+    if [[ $result -eq 0 ]]; then break; fi
+    count="$((count + 1))"
+    sleep $SLEEP_SECONDS
+  done
+
+  [[ "${count}" -gt ${RETRY_COUNT} ]] && {
+    echo -e "\\n${ANSI_RED}The command \"${*}\" failed ${RETRY_COUNT} times.${ANSI_RESET}\\n" >&2
+  }
+
+  return "${result}"
+}
+
+retry_command "$@"
