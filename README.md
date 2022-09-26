@@ -19,7 +19,7 @@ permissions:
 
 jobs:
   compare:
-    if: startsWith(github.head_ref, 'dependabot/bundler/')
+    if: github.actor == 'dependabot[bot]' && startsWith(github.head_ref, 'dependabot/bundler/')
     runs-on: ubuntu-latest
     steps:
       - uses: dentarg/gem-compare@v1
