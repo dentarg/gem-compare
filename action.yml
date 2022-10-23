@@ -45,6 +45,12 @@ runs:
         echo "COMPARE_FROM_VERSION=$(echo $PR_TITLE | parse_title from)" >> $GITHUB_ENV
         echo "COMPARE_TO_VERSION=$(echo $PR_TITLE | parse_title to)" >> $GITHUB_ENV
 
+    - name: Post Diffend URL
+      shell: bash
+      run: |
+        echo "https://my.diffend.io/gems/$COMPARE_GEM/$COMPARE_FROM_VERSION/$COMPARE_TO_VERSION" >> comment0.txt
+        with_retries gh pr comment $PR_NUMBER --body-file comment0.txt --repo ${{ github.repository }}
+
     - name: Run gem install gem-compare
       shell: bash
       run: |
