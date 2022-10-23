@@ -26,3 +26,10 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 ````
+
+With the above workflow, to re-run the action, have Dependabot close and re-open the pull request:
+
+```bash
+gh pr comment --body '@dependabot close' NUM
+gh pr comment --body '@dependabot reopen' NUM
+````
