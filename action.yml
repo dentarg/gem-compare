@@ -54,17 +54,17 @@ runs:
     - name: Run gem install gem-compare
       shell: bash
       run: |
-        with_retries gem install gem-compare --version ${{ inputs.gem_compare_version }}
+        with_retries gem install gem-compare --version ${{ inputs.gem_compare_version }} || true
 
     - name: Run gem compare
       shell: bash
       run: |
-        with_retries gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_output.txt
+        with_retries gem compare $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_output.txt || true
 
     - name: Run gem compare --diff
       shell: bash
       run: |
-        with_retries gem compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_diff.txt
+        with_retries gem compare --diff $COMPARE_GEM $COMPARE_FROM_VERSION $COMPARE_TO_VERSION > compare_diff.txt || true
 
     - name: Run gh pr comment
       shell: bash
@@ -86,5 +86,5 @@ runs:
         echo '````'                    >> comment2.txt
         echo '</Details>'              >> comment2.txt
 
-        with_retries gh pr comment $PR_NUMBER --body-file comment1.txt --repo ${{ github.repository }}
+        with_retries gh pr comment $PR_NUMBER --body-file comment1.txt --repo ${{ github.repository }} || true
         gh pr comment $PR_NUMBER --body-file comment2.txt --repo ${{ github.repository }} || true

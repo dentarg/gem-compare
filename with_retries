@@ -3,8 +3,8 @@
 # Modified version of travis_retry
 # https://github.com/travis-ci/travis-build/blob/04a1963de816b8618bb3d7e2e22d873f05ab4091/lib/travis/build/bash/travis_retry.bash
 
-SLEEP_SECONDS=9
-RETRY_COUNT=20
+SLEEP_SECONDS=${SLEEP_SECONDS:-9}
+RETRY_COUNT=${RETRY_COUNT:-20}
 
 retry_command() {
   local result=0
