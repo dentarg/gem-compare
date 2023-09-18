@@ -33,8 +33,14 @@ def post_gh_comment(pr_number:, body:, repo:)
   run_with_retries(command:)
 end
 
+def with_retries
+  return "with_retries" if ENV["GITHUB_ACTIONS"] == "true"
+
+  "./with_retries"
+end
+
 def run_with_retries(command: [])
-  command_args = command.dup.prepend("./with_retries")
+  command_args = command.dup.prepend(with_retries)
 
   if ENV.key?("DEBUG")
     puts "+ #{command_args.join(" ")}"
@@ -45,7 +51,7 @@ def run_with_retries(command: [])
 end
 
 def output_from_with_retries(command: [])
-  command_args = command.dup.prepend("./with_retries")
+  command_args = command.dup.prepend(with_retries)
 
   if ENV.key?("DEBUG")
     puts "+ #{command_args.join(" ")}"
