@@ -81,15 +81,28 @@ def gem_compare_command(gem_name:, from:, to:, diff: false)
 end
 
 def gem_compare_comment(command:, output:)
-  <<~COMMENT
-    <Details><Summary><h2><code>#{command.join(" ")}</code></h2></Summary>
+  not_output_chars = 150
+  max_size         = 65_536 - not_output_chars
+  too_large_output = output.size > max_size
 
-    ````ruby
-    #{output}
-    ````
-    </Details>
+  if too_large_output
+    <<~COMMENT
+      <h2><code>#{command.join(" ")}</code></h2>
 
-  COMMENT
+      Diff too large (#{output.size} chars)
+
+    COMMENT
+  else
+    <<~COMMENT
+      <Details><Summary><h2><code>#{command.join(" ")}</code></h2></Summary>
+
+      ````ruby
+      #{output}
+      ````
+      </Details>
+
+    COMMENT
+  end
 end
 
 #
