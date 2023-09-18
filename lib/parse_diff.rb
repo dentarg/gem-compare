@@ -16,6 +16,6 @@ class ParseDiff
       end
     end
 
-    versions
+    versions.select { |_gem_name, versions| versions.size == 2 }
   end
 end

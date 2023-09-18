@@ -1,0 +1,16 @@
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 180ed2c..d2b5691 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -1,8 +1,10 @@
+ GEM
+   remote: https://rubygems.org/
+   specs:
++    bigdecimal (3.1.4)
+     pg (1.2.3)
+-    sequel (5.39.0)
++    sequel (5.72.0)
++      bigdecimal
+ 
+ PLATFORMS
+   ruby
