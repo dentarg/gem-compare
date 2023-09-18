@@ -66,3 +66,5 @@ runs:
       shell: bash
       run: |
         compare_gem_versions
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
