@@ -1,0 +1,126 @@
+#!/usr/bin/env ruby
+
+require "json"
+require "open3"
+require "stringio"
+require "tempfile"
+
+require_relative "lib/parse_diff"
+
+def to_file(str)
+  file = Tempfile.new("gem-compare-action")
+  file.write(str)
+  file.rewind
+  file.path
+end
+
+def diffend_url(gem_name:, from:, to:)
+  "https://my.diffend.io/gems/#{gem_name}/#{from}/#{to}"
+end
+
+def post_gh_comment(pr_number:, body:, repo:)
+  command = %W[
+    gh
+    pr
+    comment
+    #{pr_number}
+    --body-file
+    #{to_file(body)}
+    --repo
+    #{repo}
+  ]
+
+  run_with_retries(command:)
+end
+
+def run_with_retries(command: [])
+  command_args = command.dup.prepend("./with_retries")
+
+  if ENV.key?("DEBUG")
+    puts "+ #{command_args.join(" ")}"
+    return
+  end
+
+  system(*command_args, exception: true)
+end
+
+def output_from_with_retries(command: [])
+  command_args = command.dup.prepend("./with_retries")
+
+  if ENV.key?("DEBUG")
+    puts "+ #{command_args.join(" ")}"
+    return "dummy output"
+  end
+
+  stdout_str, stderr_str, status = Open3.capture3(*command_args)
+
+  if status.success?
+    stdout_str
+  else
+    raise "Command '#{command_args.join(' ')}' failed: #{stderr_str}"
+  end
+end
+
+def gem_compare_command(gem_name:, from:, to:, diff: false)
+  diff_flag = diff ? "--diff" : ""
+
+  [
+    "gem",
+    "compare",
+    diff ? "--diff" : nil,
+    gem_name,
+    from,
+    to,
+  ].compact
+end
+
+def gem_compare_comment(command:, output:)
+  <<~COMMENT
+    <Details><Summary><h2><code>#{command.join(" ")}</code></h2></Summary>
+
+    ````ruby
+    #{output}
+    ````
+    </Details>
+
+  COMMENT
+end
+
+#
+# main
+#
+
+repo            = ENV.fetch("GITHUB_REPOSITORY", "dentarg/gem-compare")
+pr_number       = ENV.fetch("PR_NUMBER", 2)
+diff_input      = ENV["PR_DIFF"] || STDIN.readlines.join
+versions        = ParseDiff.parse(diff_input)
+diffend_comment = StringIO.new
+diffend_comment.puts "## Diff URLs"
+
+puts "Changes detected:"
+versions.each do |gem_name, (from, to)|
+  puts "* #{gem_name} #{from} ➡ #{to}"
+
+  diffend_comment.puts "* #{diffend_url(gem_name:, from:, to:)}"
+end
+
+puts "Posting comment with Diffend URLs"
+post_gh_comment(pr_number:, body: diffend_comment.string, repo:)
+
+versions.each do |gem_name, (from, to)|
+  puts "Comparing: #{gem_name} #{from} ➡ #{to}"
+
+  command = gem_compare_command(gem_name:, from:, to:)
+  output  = output_from_with_retries(command:)
+  body    = gem_compare_comment(command:, output:)
+
+  puts "Posting comment with 'gem compare' output"
+  post_gh_comment(pr_number:, body:, repo:)
+
+  command = gem_compare_command(gem_name:, from:, to:, diff: true)
+  output  = output_from_with_retries(command:)
+  body    = gem_compare_comment(command:, output:)
+
+  puts "Posting comment with 'gem compare --diff' output"
+  post_gh_comment(pr_number:, body:, repo:)
+end
