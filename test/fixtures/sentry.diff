@@ -1,0 +1,27 @@
+diff --git a/Gemfile.lock b/Gemfile.lock
+index b7bae4a..9079ca6 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -82,7 +82,7 @@ GEM
+     rdiscount (2.2.7.1)
+     redis (5.0.7)
+       redis-client (>= 0.9.0)
+-    redis-client (0.16.0)
++    redis-client (0.17.0)
+       connection_pool
+     redis-namespace (1.11.0)
+       redis (>= 4)
+@@ -117,10 +117,10 @@ GEM
+       nokogiri (>= 1.10.8)
+       rubyzip (>= 1.3.0)
+     rubyzip (2.3.2)
+-    sentry-resque (5.10.0)
++    sentry-resque (5.11.0)
+       resque (>= 1.24)
+-      sentry-ruby (~> 5.10.0)
+-    sentry-ruby (5.10.0)
++      sentry-ruby (~> 5.11.0)
++    sentry-ruby (5.11.0)
+       concurrent-ruby (~> 1.0, >= 1.0.2)
+     sequel (5.72.0)
+       bigdecimal

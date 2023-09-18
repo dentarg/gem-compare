@@ -3,30 +3,25 @@ on:
   push:
   workflow_dispatch:
     inputs:
-      name:
-        description: 'Name of gem to compare'
-        required: false
-        type: string
-      from:
-        description: 'From version'
-        required: false
-        type: string
-      to:
-        description: 'To version'
-        required: false
-        type: string
       pr:
-        description: 'The number of the pull request to comment in'
+        description: "The number of the pull request to comment in"
         required: false
         type: number
+
 
 jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2
+
+      - run: rake
+
       - uses: ./
         with:
-          pr_title: "Bump ${{ inputs.name || 'pg' }} from ${{ inputs.from || '1.4.0' }} to ${{ inputs.to || '1.4.1' }}"
-          pr_number: ${{ inputs.pr || 1 }}
+          pr_diff: test/fixtures/sentry.diff
+          pr_number: ${{ inputs.pr || 2 }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
