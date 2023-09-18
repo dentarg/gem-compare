@@ -38,7 +38,7 @@ runs:
         echo "PR_NUMBER=${{ github.event.pull_request.number || inputs.pr_number }}" >> $GITHUB_ENV
 
     - name: Get pull request diff from input
-      if: ${{ inputs.pr_diff != "" }}
+      if: ${{ inputs.pr_diff != '' }}
       shell: bash
       run: |
         {
@@ -48,7 +48,7 @@ runs:
         } >> "$GITHUB_ENV"
 
     - name: Get pull request diff from repo
-      if: ${{ inputs.pr_diff == "" }}
+      if: ${{ inputs.pr_diff == '' }}
       shell: bash
       run: |
         {
