@@ -4,6 +4,10 @@ branding:
   icon: "search"
   color: "red"
 inputs:
+  lockfile:
+    description: "File to diff"
+    default: "Gemfile.lock"
+    required: false
   gem_compare_version:
     description: "Version of the gem-compare plugin"
     default: "1.2.1"
@@ -58,7 +62,7 @@ runs:
       run: |
         {
           echo 'PR_DIFF<<EOF'
-          git diff HEAD^ HEAD -- Gemfile.lock
+          git diff HEAD^ HEAD -- "${{ inputs.lockfile }}"
           echo EOF
         } >> "$GITHUB_ENV"
 
