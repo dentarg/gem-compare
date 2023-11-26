@@ -3,7 +3,7 @@
 class ParseDiff
   def self.parse(input)
     versions    = Hash.new { |hash, key| hash[key] = [] }
-    versions_re = %r{\A(-|\+)    (?<gem>((\w|-))+) \((?<version>.+)\)\z}
+    versions_re = %r{\A(-|\+)    (?<gem>((\w|-))+) \((?<version>(\.|\d)+)(-(?<platform>.*))*\)\z}
 
     input.each_line do |line|
       $stderr.puts "line=#{line.inspect}" if ENV.key?("DEBUG")
@@ -16,6 +16,10 @@ class ParseDiff
       end
     end
 
-    versions.select { |_gem_name, versions| versions.size == 2 }
+    versions.select do |_gem_name, versions|
+      versions.uniq!
+
+      versions.size == 2
+    end
   end
 end

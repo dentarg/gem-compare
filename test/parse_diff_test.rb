@@ -5,6 +5,18 @@ require "test/unit"
 require_relative "../lib/parse_diff"
 
 class ParseDiffTest < Test::Unit::TestCase
+  def test_multiple_platforms
+    fixture  = File.join(__dir__, "fixtures", "nokogiri.diff")
+    input    = File.read(fixture)
+    expected = {
+      "mini_portile2" => %w[2.8.4  2.8.5],
+      "nokogiri"      => %w[1.15.4 1.15.5],
+      "racc"          => %w[1.7.1  1.7.3],
+    }
+
+    assert_equal expected, ParseDiff.parse(input)
+  end
+
   def test_multiple_bumps
     fixture  = File.join(__dir__, "fixtures", "sentry.diff")
     input    = File.read(fixture)
