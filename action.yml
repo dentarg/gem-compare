@@ -34,7 +34,7 @@ runs:
 
     - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.2
+        ruby-version: ruby
 
     # Ensure our scripts can be found when running the action
     # https://docs.github.com/en/actions/creating-actions/creating-a-composite-action#creating-an-action-metadata-file
