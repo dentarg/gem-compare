@@ -5,6 +5,7 @@ GEM_CONFIG_FILE=${GEM_CONFIG_FILE:-"gemrc"}
 set -u
 set -x
 
+# TODO: don't use default vendor/cache as project can be using that
 bundle install --local --verbose
 
 cd vendor/cache
