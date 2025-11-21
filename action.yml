@@ -27,7 +27,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
       with:
         ref: ${{ github.event.pull_request.head.sha }} # https://github.com/actions/checkout#checkout-pull-request-head-commit-instead-of-merge-commit
         fetch-depth: 2 # https://github.com/actions/checkout#checkout-head
