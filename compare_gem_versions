@@ -8,7 +8,7 @@ require "tempfile"
 require_relative "lib/parse_diff"
 
 def to_file(str)
-  file = Tempfile.new("gem-compare-action")
+  file = Tempfile.create("gem-compare-action")
   file.write(str)
   file.rewind
   file.path
